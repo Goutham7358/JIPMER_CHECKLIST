@@ -13,7 +13,6 @@ exports.getChecklist = (req, res, next) => {
 };
 
 exports.postChecklist = (req, res, next) => {
-
     const result = Object.keys(req.body).map((key) => {
         return key;
     })
