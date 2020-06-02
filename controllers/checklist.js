@@ -41,3 +41,19 @@ exports.postChecklist = (req, res, next) => {
         });
 
 };
+
+exports.getAddPoint = (req,res,next)=>{
+  res.render('addpoint');
+}
+
+exports.postAddPoint = (req,res,next)=>{
+  const checklist = new CheckList({
+    number: req.body.number,
+    description: req.body.description
+  })
+  
+  checklist.save().then(result=>{
+    res.redirect('/')
+  })
+}
+
