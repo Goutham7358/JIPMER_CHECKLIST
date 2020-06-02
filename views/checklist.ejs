@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHECKLIST</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
+
 <body>
-    <h1>JOURNAL REVIEW CHECKLIST</h1>
-    <form action="/" method="POST" >
-    <% for (let item of items) { %>
-    <label for="<%= item.number %>"><%= item.description %></label>
-    <input type="checkbox" class="checks" name=<%= item._id %>  id="<%= item.number %>" >
-    <% } %>
-   <button type="submit">Submit</button>
-    </form>
+    <h1 class="main-header">JOURNAL REVIEW CHECKLIST</h1>
+    <%- include('./includes/navigation.ejs') %>
+        <form action="/" method="POST">
+            <% for (let item of items) { %>
+                <label for="<%= item.number %>"><%= item.description %></label>
+                <input type="checkbox" class="checks" name=<%=item._id %> id="
+                <%= item.number %>" >
+                    <% } %>
+                        <button type="submit">Submit</button>
+        </form>
 </body>
+
 </html>

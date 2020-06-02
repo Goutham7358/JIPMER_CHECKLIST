@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.main-header-nav {
+    background-color: #0277BD;
+}
+
+.main-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-item {
+    padding: 20px;
+}
+
+.nav-item a {
+    color: #E1F5FE;
+    font-size: 2em;
+    text-decoration: none;
+}
