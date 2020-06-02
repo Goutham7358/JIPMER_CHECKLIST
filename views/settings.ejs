@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Settings</title>
+    </head>
+    <body>
+        <h1>JOURNAL REVIEW CHECKLIST SETTINGS</h1>
+        <% for (let item of items) { %>
+            <div>
+
+                <form action="/settings-delete" method="POST">
+                    <label for="<%= item.number %>"><%= item.description %></label>
+                    <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
+                    <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
+                    <button type="submit">DELETE</button>
+                </form>
+            </div>
+        <% } %>
+    </body>
+</html>
