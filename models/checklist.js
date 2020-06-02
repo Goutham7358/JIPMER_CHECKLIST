@@ -12,11 +12,8 @@ const checkListSchema  = new Schema({
     }
 });
 
-checkListSchema.statics.getCheckedItems = function(){
-    this.find().then(result=>{
-        
-        
-    })
+checkListSchema.statics.getCheckedItems = function(result){
+   
 }
 
 module.exports = mongoose.model('Checklist',checkListSchema);
