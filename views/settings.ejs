@@ -16,14 +16,7 @@
                     <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
                     <button class="btn danger" type="submit">DELETE</button>
                 </form>
-                <form class="form1" action="/add-point" method="POST">
-                    <label class ="label1" for="<%= item.number %>"><%= item.description %></label>
-                    <input type="hidden" name="itemToEdit" value=<%= item._id %> id=<%= item.number %>>
-                    <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
-                    <input type="hidden" name="itemDescription" value=<%= item.description %> id=<%= item.number %>>
-                    <input type="hidden" name="editing" value="true" id=<%= item.number %>>
-                    <button class="btn" type="submit">EDIT</button>
-                </form>
+                <a href="/settings-edit/<%= item._id %>" class="btn">Edit</a>
                 <form class="form1" action="/settings-move" method="POST">
                     <input type="hidden" name="itemToMove" value=<%= item._id %>>
                     <input type="hidden" name="action" value="up" %>>

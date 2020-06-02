@@ -56,8 +56,8 @@ exports.postChecklist = (req, res, next) => {
 };
 
 exports.getAddPoint = (req,res,next)=>{
-  res.render('addpoint', {
-    editing: req.query.edit
+  res.render('addpoint',{
+    editing: false
   });
 }
 
@@ -69,6 +69,32 @@ exports.postAddPoint = (req,res,next)=>{
   
   checklist.save().then(result=>{
     res.redirect('/')
+  })
+}
+exports.getEditPoint = (req,res,next)=>{
+  const itemId = req.params.editItem;
+  CheckList.findById(itemId).then((item)=>{
+    if(!item){
+      res.redirect('/settings');
+    }
+    console.log(item);
+    res.render('addpoint', {
+      editing: true,
+      itemId: item._id,
+      itemNumber: item.number,
+      itemDesc: item.description,
+    })
+  })
+}
+
+exports.postEditPoint = (req, res, next) => {
+  CheckList.findById(req.body.id).then((item) => {
+    item.number = req.body.number;
+    item.description = req.body.description;
+    return item.save()
+  }).then(() => {
+    console.log('modified');
+    res.redirect('/settings');
   })
 }
 
