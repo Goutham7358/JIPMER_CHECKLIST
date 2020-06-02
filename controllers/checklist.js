@@ -3,7 +3,20 @@ const CheckList = require('../models/checklist');
 exports.getChecklist = (req, res, next) => {
     CheckList.find()
         .then((items) => {
-            res.render('checklist', {
+
+          function compare(a, b){
+            if(a.number < b.number){
+              return -1;
+            }else if(a.number > b.number){
+              return 1;
+            }else{
+              return 0;
+            }
+          }
+
+         items.sort(compare);
+
+         res.render('checklist', {
                 items: items,
             });
         })
