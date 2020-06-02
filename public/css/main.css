@@ -8,8 +8,14 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.main-header {
+    font-size: 25px;
+    text-align: center;
+}
+
 .main-header-nav {
     background-color: #0277BD;
+    margin-bottom: 20px;
 }
 
 .main-nav {
@@ -25,6 +31,27 @@ body {
 
 .nav-item a {
     color: #E1F5FE;
-    font-size: 2em;
+    font-size: 1em;
     text-decoration: none;
+}
+
+.checklist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.list {
+    margin-bottom: 20px;
+}
+
+.list-item {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#btn {
+    align-self: center;
+    padding: 5px 15px;
 }
