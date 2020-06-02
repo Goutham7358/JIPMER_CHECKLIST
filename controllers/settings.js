@@ -23,3 +23,10 @@ exports.deleteItem = (req, res, next) => {
         console.log(err);
     });
 };
+
+exports.moveHandler = (req, res, next) => {
+    item = req.body.itemToMove;
+    action = req.body.action;
+    console.log("Do", action, "on item:", item);
+    res.redirect('/settings');
+}

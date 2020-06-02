@@ -9,5 +9,6 @@ router.get('/add-point',checklistController.getAddPoint);
 router.post('/add-point', checklistController.postAddPoint);
 router.get('/settings', settingsController.getSettings);
 router.post('/settings-delete', settingsController.deleteItem);
+router.post('/settings-move', settingsController.moveHandler);
 
 module.exports = router;
