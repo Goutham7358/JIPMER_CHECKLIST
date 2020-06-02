@@ -9,20 +9,28 @@
     <body>
         <h1>JOURNAL REVIEW CHECKLIST SETTINGS</h1>
         <% for (let item of items) { %>
-            <div>
-                <form action="/settings-delete" method="POST">
-                    <label for="<%= item.number %>"><%= item.description %></label>
+            <div class="main-container">
+                <form class="form1" action="/settings-delete" method="POST">
+                    <label class ="label1" for="<%= item.number %>"><%= item.description %></label>
                     <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
                     <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
-                    <button type="submit">DELETE</button>
+                    <button class="btn danger" type="submit">DELETE</button>
                 </form>
-                <form action="/settings-move" method="POST">
+                <form class="form1" action="/add-point" method="POST">
+                    <label class ="label1" for="<%= item.number %>"><%= item.description %></label>
+                    <input type="hidden" name="itemToEdit" value=<%= item._id %> id=<%= item.number %>>
+                    <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
+                    <input type="hidden" name="itemDescription" value=<%= item.description %> id=<%= item.number %>>
+                    <input type="hidden" name="editing" value="true" id=<%= item.number %>>
+                    <button class="btn" type="submit">EDIT</button>
+                </form>
+                <form class="form1" action="/settings-move" method="POST">
                     <input type="hidden" name="itemToMove" value=<%= item._id %>>
                     <input type="hidden" name="action" value="up" %>>
                     <input type="hidden" name="itemsList" value=<%= item.number %>>
                     <button class="btn"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
                 </form>
-                <form action="/settings-move" method="POST">
+                <form class="form1" action="/settings-move" method="POST">
                     <input type="hidden" name="itemToMove" value=<%= item._id %>>
                     <input type="hidden" name="action" value="down" %>>
                     <input type="hidden" name="itemsList" value=<%= item.number %>>

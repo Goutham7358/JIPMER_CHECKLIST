@@ -56,7 +56,9 @@ exports.postChecklist = (req, res, next) => {
 };
 
 exports.getAddPoint = (req,res,next)=>{
-  res.render('addpoint');
+  res.render('addpoint', {
+    editing: req.query.edit
+  });
 }
 
 exports.postAddPoint = (req,res,next)=>{
