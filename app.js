@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const checkListController = require('./controllers/checklist');
+const settingsController = require('./controllers/settings');
 const mongoose = require('mongoose');
 const Checklist = require('./models/checklist');
 const checklistRoutes = require('./routes/checklist');

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Settings</title>
+        <script src="https://use.fontawesome.com/2f793fe1c8.js"></script>
+    </head>
+    <body>
+        <h1>JOURNAL REVIEW CHECKLIST SETTINGS</h1>
+        <% for (let item of items) { %>
+            <div>
+                <form action="/settings-delete" method="POST">
+                    <label for="<%= item.number %>"><%= item.description %></label>
+                    <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
+                    <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
+                    <button type="submit">DELETE</button>
+                </form>
+                <form action="/settings-move" method="POST">
+                    <input type="hidden" name="itemToMove" value=<%= item._id %>>
+                    <input type="hidden" name="action" value="up" %>>
+                    <button class="btn"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+                </form>
+                <form action="/settings-move" method="POST">
+                    <input type="hidden" name="itemToMove" value=<%= item._id %>>
+                    <input type="hidden" name="action" value="down" %>>
+                    <button class="btn"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        <% } %>
+    </body>
+</html>
