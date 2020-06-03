@@ -18,9 +18,9 @@
             </div>
             <div class="form-control">
             <label for="description">Point Description</label>
-            <textarea rows="5" name="description" id="description"><% if(editing){ %><%= itemDesc %><% } %>
-        </textarea>
-    </div>
+            <textarea rows="15" name="description" id="description"><% if(editing){ %><%= itemDesc %><% } %>
+            </textarea>
+            </div>
             <input type="hidden" name="id" value="<% if(editing){ %><%= itemId %><% } %>">
             <button type="submit" class="btn"> <% if(!editing) { %>  Add Point <% } else { %> Edit Point <% } %></button>
         </form>
