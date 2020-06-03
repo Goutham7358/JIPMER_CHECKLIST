@@ -6,18 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Point</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/form.css">
 </head>
 
 <body>
     <%- include('./includes/navigation.ejs') %>
-        <form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST">
+        <form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST" class="product-form">
+            <div class="form-control">
             <label for="number">Point Number</label>
             <input type="number" name="number" id="number" min="1" value="<% if(editing){ %><%= itemNumber %><% } %>">
+            </div>
+            <div class="form-control">
             <label for="description">Point Description</label>
             <textarea rows="5" name="description" id="description"><% if(editing){ %><%= itemDesc %><% } %>
         </textarea>
+    </div>
             <input type="hidden" name="id" value="<% if(editing){ %><%= itemId %><% } %>">
-            <button type="submit"> <% if(!editing) { %>  Add Point <% } else { %> Edit Point <% } %></button>
+            <button type="submit" class="btn"> <% if(!editing) { %>  Add Point <% } else { %> Edit Point <% } %></button>
         </form>
 </body>
 

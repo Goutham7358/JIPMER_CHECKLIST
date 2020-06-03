@@ -12,5 +12,6 @@ router.post('/settings-edit', settingsController.postEditPoint);
 router.get('/settings-edit/:editItem', settingsController.getEditPoint);
 router.post('/settings-delete', settingsController.deleteItem);
 router.post('/settings-move', settingsController.moveHandler);
+router.get('/download');
 
 module.exports = router;
