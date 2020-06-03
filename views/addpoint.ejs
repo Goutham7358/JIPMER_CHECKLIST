@@ -8,7 +8,7 @@
 <body>
 <form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST">
         <label for="number">Point Number</label>
-        <input type="number" name="number" id="number" value="<% if(editing){ %><%= itemNumber %><% } %>">
+        <input type="number" name="number" id="number" min="1" value="<% if(editing){ %><%= itemNumber %><% } %>">
         <label for="description">Point Description</label>
         <textarea rows="5" name="description" id="description"><% if(editing){ %><%= itemDesc %><% } %>
         </textarea>
