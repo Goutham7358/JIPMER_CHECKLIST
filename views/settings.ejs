@@ -90,43 +90,42 @@
 
 <body>
     <h1>JOURNAL REVIEW CHECKLIST SETTINGS</h1>
-    <%- include('./includes/navigation.ejs') %>
-        <% for (let item of items) { %>
-            <div class="main-container">
-                <div class="div1">
-                    <p class="number-style">
-                        <%= item.number %>.</p>
-                    <p class="label1">
-                        <%= item.description %>
-                    </p>
-                </div>
-                <div class="buttons-container">
-                    <form class="form1" action="/settings-delete" method="POST">
-                        <input type="hidden" name="itemToDelete" value=<%=i tem._id %> id=
-                        <%= item.number %>>
-                            <input type="hidden" name="itemNumber" value=<%=i tem.number %> id=
-                            <%= item.number %>>
-                                <button class="btn danger" type="submit">DELETE</button>
-                    </form>
-                    <a href="/settings-edit/<%= item._id %>" class="btn">EDIT</a>
-                    <form class="form1" action="/settings-move" method="POST">
-                        <input type="hidden" name="itemToMove" value=<%=i tem._id %>>
-                        <input type="hidden" name="action" value="up" %>>
-                        <input type="hidden" name="itemsList" value=<%=i tem.number %>>
-                        <button class="btn"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-                    </form>
-                    <form class="form1" action="/settings-move" method="POST">
-                        <input type="hidden" name="itemToMove" value=<%=i tem._id %>>
-                        <input type="hidden" name="action" value="down" %>>
-                        <input type="hidden" name="itemsList" value=<%=i tem.number %>>
-                        <button class="btn"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
-                    </form>
-                </div>
+    <% for (let item of items) { %>
+        <div class="main-container">
+            <div class="div1">
+                <p class="number-style">
+                    <%= item.number %>.</p>
+                <p class="label1">
+                    <%= item.description %>
+                </p>
             </div>
-            <% } %>
-                <div class="button-div">
-                    <a href="/add-point" class="btn">Add a New Item</a>
-                </div>
+            <div class="buttons-container">
+                <form class="form1" action="/settings-delete" method="POST">
+                    <input type="hidden" name="itemToDelete" value=<%=i tem._id %> id=
+                    <%= item.number %>>
+                        <input type="hidden" name="itemNumber" value=<%=i tem.number %> id=
+                        <%= item.number %>>
+                            <button class="btn danger" type="submit">DELETE</button>
+                </form>
+                <a href="/settings-edit/<%= item._id %>" class="btn">EDIT</a>
+                <form class="form1" action="/settings-move" method="POST">
+                    <input type="hidden" name="itemToMove" value=<%=i tem._id %>>
+                    <input type="hidden" name="action" value="up" %>>
+                    <input type="hidden" name="itemsList" value=<%=i tem.number %>>
+                    <button class="btn"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+                </form>
+                <form class="form1" action="/settings-move" method="POST">
+                    <input type="hidden" name="itemToMove" value=<%=i tem._id %>>
+                    <input type="hidden" name="action" value="down" %>>
+                    <input type="hidden" name="itemsList" value=<%=i tem.number %>>
+                    <button class="btn"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </div>
+        <% } %>
+            <div class="button-div">
+                <a href="/add-point" class="btn">Add a New Item</a>
+            </div>
 </body>
 
 </html>

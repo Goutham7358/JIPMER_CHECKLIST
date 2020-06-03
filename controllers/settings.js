@@ -18,7 +18,7 @@ exports.getSettings = (req, res, next) => {
 
             res.render("settings", {
                 items: items,
-                path: '/settings'
+                //path: '/settings'
             });
         })
         .catch((err) => {
