@@ -25,6 +25,11 @@ body {
     display: flex;
 }
 
+.centered{
+    text-align: center;
+}
+
+
 .nav-item a:hover,
 .nav-item a:active {
     color: #f5db49;
@@ -62,6 +67,15 @@ body {
     display: flex;
 
 }
+
+.product-form {
+    width: 20rem;
+    max-width: 90%;
+    margin: auto;
+    display: block;
+}
+
+
 
 .container {
     display: flex;

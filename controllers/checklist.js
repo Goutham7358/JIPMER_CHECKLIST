@@ -46,7 +46,11 @@ exports.postChecklist = (req, res, next) => {
     };
     start().then(() => {
         console.log(products);
-        res.redirect('/');
+
+        res.render('downloadDoc',{
+          products: products,
+          path: '/download'
+        })
     });
 };
 
