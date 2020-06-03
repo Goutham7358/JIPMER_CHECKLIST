@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Point</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
+
 <body>
-<form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST">
-        <label for="number">Point Number</label>
-        <input type="number" name="number" id="number" min="1" value="<% if(editing){ %><%= itemNumber %><% } %>">
-        <label for="description">Point Description</label>
-        <textarea rows="5" name="description" id="description"><% if(editing){ %><%= itemDesc %><% } %>
+    <%- include('./includes/navigation.ejs') %>
+        <form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST">
+            <label for="number">Point Number</label>
+            <input type="number" name="number" id="number" min="1" value="<% if(editing){ %><%= itemNumber %><% } %>">
+            <label for="description">Point Description</label>
+            <textarea rows="5" name="description" id="description"><% if(editing){ %><%= itemDesc %><% } %>
         </textarea>
-        <input type="hidden" name="id" value="<% if(editing){ %><%= itemId %><% } %>">
-    <button type="submit"> <% if(!editing) { %>  Add Point <% } else { %> Edit Point <% } %></button>
-    </form>
+            <input type="hidden" name="id" value="<% if(editing){ %><%= itemId %><% } %>">
+            <button type="submit"> <% if(!editing) { %>  Add Point <% } else { %> Edit Point <% } %></button>
+        </form>
 </body>
+
 </html>

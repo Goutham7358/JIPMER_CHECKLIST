@@ -5,19 +5,22 @@ const settingsController = require('./controllers/settings');
 const mongoose = require('mongoose');
 const Checklist = require('./models/checklist');
 const checklistRoutes = require('./routes/checklist');
+const path = require('path');
+
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(checklistRoutes);
 
 mongoose
-  .connect(
-    'mongodb+srv://JIPMER:xgIzafJumuLrV0ux@cluster0-opfdu.mongodb.net/journal?retryWrites=true&w=majority'
-  )
-  .then((result) => {
-    app.listen(3000);
-  }).catch(err=>{console.log(err)});
+    .connect(
+        'mongodb+srv://JIPMER:xgIzafJumuLrV0ux@cluster0-opfdu.mongodb.net/journal?retryWrites=true&w=majority'
+    )
+    .then((result) => {
+        app.listen(3000);
+    }).catch(err => { console.log(err) });

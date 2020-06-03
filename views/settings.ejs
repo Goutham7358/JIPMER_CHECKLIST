@@ -5,80 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Settings</title>
         <script src="https://use.fontawesome.com/2f793fe1c8.js"></script>
-        <style>
-            .btn {
-            display: inline-block;
-            padding: 5px 15px;
-            margin: 3px;
-            text-decoration: none;
-            font: inherit;
-            border: 1px solid #b6b5b5;
-            color: #264dcc;
-            background: white;
-            border-radius: 5px;
-            cursor: pointer;
-            }
-            .btn:hover,
-            .btn:active {
-            background-color: #264dcc;
-            color: white;
-            }
-            .btn.danger {
-            color: red;
-            border-color: #b6b5b5
-            }
-            .btn.danger:hover,
-            .btn.danger:active {
-            background: red;
-            color: white;
-            border-color: red;
-            }
-            .label1 {
-            font-size: 40;
-            font-family:Georgia, 'Times New Roman', Times, serif;
-            /* align-self: center; */
-            }
-            .main-container {
-            margin-left: 2.5%;
-            margin-right: 2.5%;
-            display: flex;
-            border: 1px solid #c4c4c4;
-            border-radius: 5px;
-            padding: 10px;
-
-            margin-top: 15px;
-            margin-bottom: 15px;
-            }
-            .form1{
-            display: inline-block;
-            }
-            .div1{
-                display: flex;
-                flex-grow: 1;
-                /* justify-content: center; */
-                align-items: center;
-                flex-direction: row;
-            }
-            .buttons-container{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .number-style{
-                padding: 10px;
-                /* font-size: 15px; */
-            }
-            .button-div{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-bottom: 20px;
-                padding-top: 10px;
-            }
-            </style>
+        <link rel="stylesheet" href="/css/settings.css">
+        <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
-        <h1>JOURNAL REVIEW CHECKLIST SETTINGS</h1>
+        <h1 class="main-header">JOURNAL REVIEW CHECKLIST SETTINGS</h1>
+        <%- include('./includes/navigation.ejs') %>
         <% for (let item of items) { %>
             <div class="main-container">
                 <div class="div1">

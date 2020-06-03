@@ -1,0 +1,80 @@
+.btn {
+    display: inline-block;
+    padding: 5px 15px;
+    margin: 3px;
+    text-decoration: none;
+    font: inherit;
+    border: 1px solid #b6b5b5;
+    color: #264dcc;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.btn:hover,
+.btn:active {
+    background-color: #264dcc;
+    color: white;
+}
+
+.btn.danger {
+    color: red;
+    border-color: #b6b5b5
+}
+
+.btn.danger:hover,
+.btn.danger:active {
+    background: red;
+    color: white;
+    border-color: red;
+}
+
+.label1 {
+    font-size: 40;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* align-self: center; */
+}
+
+.main-container {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    display: flex;
+    /* border: 2px solid #d1d1d1; */
+    border: 1px solid #e6e5e5;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.form1 {
+    display: inline-block;
+}
+
+.div1 {
+    display: flex;
+    flex-grow: 1;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: row;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.number-style {
+    padding: 10px;
+    /* font-size: 15px; */
+}
+
+.button-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
