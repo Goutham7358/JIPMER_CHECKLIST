@@ -18,7 +18,7 @@ exports.getSettings = (req, res, next) => {
 
             res.render("settings", {
                 items: items,
-                //path: '/settings'
+                path: '/settings',
             });
         })
         .catch((err) => {
@@ -134,6 +134,7 @@ exports.getEditPoint = (req, res, next) => {
             itemId: item._id,
             itemNumber: item.number,
             itemDesc: item.description,
+            path: '/settings'
         })
     })
 }
