@@ -8,7 +8,7 @@
         <style>
             .btn {
             display: inline-block;
-            padding: 0.25rem 1rem;
+            padding: 5px 15px;
             margin: 3px;
             text-decoration: none;
             font: inherit;
@@ -62,7 +62,7 @@
                     <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
                     <button class="btn danger" type="submit">DELETE</button>
                 </form>
-                <a href="/settings-edit/<%= item._id %>" class="btn">Edit</a>
+                <a href="/settings-edit/<%= item._id %>" class="btn">EDIT</a>
                 <form class="form1" action="/settings-move" method="POST">
                     <input type="hidden" name="itemToMove" value=<%= item._id %>>
                     <input type="hidden" name="action" value="up" %>>
