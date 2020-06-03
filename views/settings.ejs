@@ -5,13 +5,59 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Settings</title>
         <script src="https://use.fontawesome.com/2f793fe1c8.js"></script>
+        <style>
+            .btn {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            margin: 3px;
+            text-decoration: none;
+            font: inherit;
+            border: 1px solid #b6b5b5;
+            color: #264dcc;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            }
+            .btn:hover,
+            .btn:active {
+            background-color: #264dcc;
+            color: white;
+            }
+            .btn.danger {
+            color: red;
+            border-color: #b6b5b5
+            }
+            .btn.danger:hover,
+            .btn.danger:active {
+            background: red;
+            color: white;
+            border-color: red;
+            }
+            .label1 {
+            font-size: 40;
+            font-family:Georgia, 'Times New Roman', Times, serif
+            }
+            .main-container {
+            margin-left: 2.5%;
+            margin-right: 2.5%;
+            display: flex;
+            }
+            .form1{
+            display: inline;
+            }
+            .div1{
+                flex-grow: 1
+            }
+            </style>
     </head>
     <body>
         <h1>JOURNAL REVIEW CHECKLIST SETTINGS</h1>
         <% for (let item of items) { %>
             <div class="main-container">
-                <form class="form1" action="/settings-delete" method="POST">
+                <div class="div1">
                     <label class ="label1" for="<%= item.number %>"><%= item.description %></label>
+                </div>
+                <form class="form1" action="/settings-delete" method="POST">
                     <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
                     <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
                     <button class="btn danger" type="submit">DELETE</button>
