@@ -32,7 +32,6 @@ exports.deleteItem = (req, res, next) => {
         .then(() => {
             console.log("Deleted");
             console.log(id, number);
-            //res.redirect("/settings");
             CheckList.find()
                 .then((items) => {
                     async function asyncForEach(array, callback) {
@@ -60,8 +59,30 @@ exports.deleteItem = (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
-
 };
+
+async function moveFunc(action, itemIndex, items) {
+    if (action === 'up') {
+        if (itemIndex - 1 >= 0) {
+            let tempNum;
+            tempNum = items[itemIndex].number;
+            items[itemIndex].number = items[itemIndex - 1].number;
+            items[itemIndex - 1].number = tempNum;
+            await items[itemIndex].save();
+            await items[itemIndex - 1].save();
+        }
+    }
+    if (action === 'down') {
+        if (itemIndex + 1 < items.length) {
+            let tempNum;
+            tempNum = items[itemIndex].number;
+            items[itemIndex].number = items[itemIndex + 1].number;
+            items[itemIndex + 1].number = tempNum;
+            await items[itemIndex].save();
+            await items[itemIndex + 1].save();
+        }
+    }
+}
 
 exports.moveHandler = (req, res, next) => {
 
@@ -69,7 +90,7 @@ exports.moveHandler = (req, res, next) => {
     action = req.body.action;
 
     CheckList.find()
-        .then((items) => {
+        .then( async (items) => {
 
             function compare(a, b) {
                 if (a.number < b.number) {
@@ -86,30 +107,8 @@ exports.moveHandler = (req, res, next) => {
             const itemIndex = items.findIndex(item => item._id.toString() === selectedItem.toString());
             console.log("The index of the item is:", itemIndex);
 
-            if (action === 'up') {
-                if (itemIndex - 1 >= 0) {
-                    let tempNum;
-                    tempNum = items[itemIndex].number;
-                    items[itemIndex].number = items[itemIndex - 1].number;
-                    items[itemIndex - 1].number = tempNum;
-                    items[itemIndex].save();
-                    items[itemIndex - 1].save();
-                }
-
-            }
-
-            if (action === 'down') {
-                if (itemIndex + 1 < items.length) {
-                    let tempNum;
-                    tempNum = items[itemIndex].number;
-                    items[itemIndex].number = items[itemIndex + 1].number;
-                    items[itemIndex + 1].number = tempNum;
-                    items[itemIndex].save();
-                    items[itemIndex + 1].save();
-                }
-
-            }
-
+            await moveFunc(action, itemIndex, items);
+            
             console.log("The item before the selected item is :", items[itemIndex - 1]);
             console.log("The item after the selected item is:", items[itemIndex + 1]);
             res.redirect('/settings');
