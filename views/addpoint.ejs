@@ -6,7 +6,7 @@
     <title>Add Point</title>
 </head>
 <body>
-<form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit"<% } %> method="POST">
+<form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST">
         <label for="number">Point Number</label>
         <input type="number" name="number" id="number" value="<% if(editing){ %><%= itemNumber %><% } %>">
         <label for="description">Point Description</label>
