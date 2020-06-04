@@ -12,6 +12,7 @@
     <body>
         <h1 class="main-header">JOURNAL REVIEW CHECKLIST SETTINGS</h1>
         <%- include('./includes/navigation.ejs') %>
+        <div class="list-enclose">
         <% for (let item of items) { %>
             <div class="main-container">
                 <div onclick="off()"></div>
@@ -22,7 +23,7 @@
                 <div>
                     <button class="btn" id="toggle-menu" onclick="on(<%= item.number - 1 %>)">:::</button> 
                     <div class="dropdown-content">
-                        <button class="btn" onclick="off()">X</button>
+                        <button class="btn" onclick="off(<%= item.number - 1 %>)">X</button>
                         <form class="form1" action="/settings-delete" method="POST">
                             <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
                             <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
@@ -68,6 +69,7 @@
                 </div>
             </div>
         <% } %>
+        </div>
         <div class="button-div">
             <a href="/add-point" class="btn">Add a New Item</a>
         </div>
