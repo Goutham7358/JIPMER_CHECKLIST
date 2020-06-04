@@ -15,7 +15,10 @@
             <div class="list">
                 <% for (let item of items) { %>
                     <div class="list-item">
-                        <label class="container"><%= item.description %>
+                        <label class="container">
+                            <div class="descriptionContainer">
+                                <%= item.description %>
+                            </div>
                             <input type="checkbox" class="checks" name=<%=item._id %> id="<%= item.number %>" >   
                             <span class="checkmark"></span>                      
                         </label>

@@ -34,7 +34,7 @@
 .label1 {
     font-size: 40;
     font-family: Georgia, "Times New Roman", Times, serif;
-    width: 100%;
+    width: 60vmin;
     margin-right: 0.6rem;
     word-wrap: break-word;
     /* align-self: center; */

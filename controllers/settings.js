@@ -139,12 +139,67 @@ exports.getEditPoint = (req, res, next) => {
 }
 
 exports.postEditPoint = (req, res, next) => {
-    CheckList.findById(req.body.id).then((item) => {
-        item.number = req.body.number;
-        item.description = req.body.description;
-        return item.save()
-    }).then(() => {
-        console.log('modified');
-        res.redirect('/settings');
+    const new_number = req.body.number;
+    const new_description = req.body.description;
+
+    CheckList.findByIdAndRemove(req.body.id).then((result) => {
+        CheckList.find()
+        .then((items) => {
+            function compare(a, b) {
+                if (a.number < b.number) {
+                    return -1;
+                } else if (a.number > b.number) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
+            items.sort(compare);
+
+            async function asyncForEach(array, callback) {
+                for (let index = req.body.number - 1; index < array.length; index++) {
+                    await callback(array[index], index, array);
+                }
+            }
+
+            const itemUpdate = (item, index, items) => {
+                item.number = index + 2;
+                item.save();
+            };
+
+            const start = async() => {
+                await asyncForEach(items, itemUpdate);
+            };
+
+            if (req.body.number > items.length + 1) {
+                req.body.number = items.length + 1;
+                console.log("This can't be done?", req.body.number)
+                const checklist = new CheckList({
+                    number: req.body.number,
+                    description: req.body.description,
+                });
+
+                checklist.save().then((result) => {
+                    res.redirect('/settings');
+                });
+            } else if (req.body.number >= 0) {
+                start().then((result) => {
+                    const checklist = new CheckList({
+                        number: req.body.number,
+                        description: req.body.description,
+                    });
+
+                    checklist.save().then((result) => {
+                        res.redirect('/settings');
+                    });
+                });
+            } else {
+                res.redirect('/settings')
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     })
 }
