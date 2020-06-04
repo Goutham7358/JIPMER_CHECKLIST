@@ -32,7 +32,6 @@ exports.deleteItem = (req, res, next) => {
         .then(() => {
             console.log("Deleted");
             console.log(id, number);
-            //res.redirect("/settings");
             CheckList.find()
                 .then((items) => {
                     async function asyncForEach(array, callback) {
@@ -60,8 +59,30 @@ exports.deleteItem = (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
-
 };
+
+async function moveFunc(action, itemIndex, items) {
+    if (action === 'up') {
+        if (itemIndex - 1 >= 0) {
+            let tempNum;
+            tempNum = items[itemIndex].number;
+            items[itemIndex].number = items[itemIndex - 1].number;
+            items[itemIndex - 1].number = tempNum;
+            await items[itemIndex].save();
+            await items[itemIndex - 1].save();
+        }
+    }
+    if (action === 'down') {
+        if (itemIndex + 1 < items.length) {
+            let tempNum;
+            tempNum = items[itemIndex].number;
+            items[itemIndex].number = items[itemIndex + 1].number;
+            items[itemIndex + 1].number = tempNum;
+            await items[itemIndex].save();
+            await items[itemIndex + 1].save();
+        }
+    }
+}
 
 exports.moveHandler = (req, res, next) => {
 
@@ -69,7 +90,7 @@ exports.moveHandler = (req, res, next) => {
     action = req.body.action;
 
     CheckList.find()
-        .then((items) => {
+        .then( async (items) => {
 
             function compare(a, b) {
                 if (a.number < b.number) {
@@ -86,30 +107,8 @@ exports.moveHandler = (req, res, next) => {
             const itemIndex = items.findIndex(item => item._id.toString() === selectedItem.toString());
             console.log("The index of the item is:", itemIndex);
 
-            if (action === 'up') {
-                if (itemIndex - 1 >= 0) {
-                    let tempNum;
-                    tempNum = items[itemIndex].number;
-                    items[itemIndex].number = items[itemIndex - 1].number;
-                    items[itemIndex - 1].number = tempNum;
-                    items[itemIndex].save();
-                    items[itemIndex - 1].save();
-                }
-
-            }
-
-            if (action === 'down') {
-                if (itemIndex + 1 < items.length) {
-                    let tempNum;
-                    tempNum = items[itemIndex].number;
-                    items[itemIndex].number = items[itemIndex + 1].number;
-                    items[itemIndex + 1].number = tempNum;
-                    items[itemIndex].save();
-                    items[itemIndex + 1].save();
-                }
-
-            }
-
+            await moveFunc(action, itemIndex, items);
+            
             console.log("The item before the selected item is :", items[itemIndex - 1]);
             console.log("The item after the selected item is:", items[itemIndex + 1]);
             res.redirect('/settings');
@@ -140,12 +139,67 @@ exports.getEditPoint = (req, res, next) => {
 }
 
 exports.postEditPoint = (req, res, next) => {
-    CheckList.findById(req.body.id).then((item) => {
-        item.number = req.body.number;
-        item.description = req.body.description;
-        return item.save()
-    }).then(() => {
-        console.log('modified');
-        res.redirect('/settings');
+    const new_number = req.body.number;
+    const new_description = req.body.description;
+
+    CheckList.findByIdAndRemove(req.body.id).then((result) => {
+        CheckList.find()
+        .then((items) => {
+            function compare(a, b) {
+                if (a.number < b.number) {
+                    return -1;
+                } else if (a.number > b.number) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
+            items.sort(compare);
+
+            async function asyncForEach(array, callback) {
+                for (let index = req.body.number - 1; index < array.length; index++) {
+                    await callback(array[index], index, array);
+                }
+            }
+
+            const itemUpdate = (item, index, items) => {
+                item.number = index + 2;
+                item.save();
+            };
+
+            const start = async() => {
+                await asyncForEach(items, itemUpdate);
+            };
+
+            if (req.body.number > items.length + 1) {
+                req.body.number = items.length + 1;
+                console.log("This can't be done?", req.body.number)
+                const checklist = new CheckList({
+                    number: req.body.number,
+                    description: req.body.description,
+                });
+
+                checklist.save().then((result) => {
+                    res.redirect('/settings');
+                });
+            } else if (req.body.number >= 0) {
+                start().then((result) => {
+                    const checklist = new CheckList({
+                        number: req.body.number,
+                        description: req.body.description,
+                    });
+
+                    checklist.save().then((result) => {
+                        res.redirect('/settings');
+                    });
+                });
+            } else {
+                res.redirect('/settings')
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     })
 }

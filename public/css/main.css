@@ -9,7 +9,7 @@ body {
 }
 
 .main-header {
-    font-size: 25px;
+    font-size: 1.5rem;
     text-align: center;
 }
 
@@ -29,21 +29,22 @@ body {
     text-align: center;
 }
 
-
-.nav-item a:hover,
-.nav-item a:active {
-    color: #f5db49;
-}
-
 .nav-item {
     padding: 20px;
 }
-
 .nav-item a {
-    color: #E1F5FE;
+    color: rgb(245, 252, 255);
     font-size: 1em;
+    font-weight: 500;
     text-decoration: none;
 }
+.nav-item a:hover,
+.nav-item a:active, 
+.nav-item a.active {
+    color: #ffe600;
+    font-weight: 500;
+}
+
 
 .checklist {
     display: flex;
@@ -57,7 +58,6 @@ body {
 }
 
 .list-item {
-    margin-left: 20px;
     margin-top: 12px;
     margin-bottom: 12px;
     border: 1px solid #e6e5e5;
@@ -68,11 +68,19 @@ body {
 
 }
 
+.descriptionContainer{
+    word-wrap: break-word;
+    width: 60vmin;
+}
+
 .product-form {
-    width: 20rem;
+    width: 50rem;
     max-width: 90%;
     margin: auto;
-    display: block;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
 }
 
 
@@ -167,16 +175,18 @@ body {
     text-decoration: none;
     font: inherit;
     border: 1px solid #a5a5a5;
-    color: #194FCB;
+    color: rgb(43, 97, 223);
     background: white;
     border-radius: 3px;
     cursor: pointer;
     align-self: center;
     padding: 8px 15px;
+    margin-bottom: 30px;
 }
 
 .btn:hover,
 .btn:active {
-    background-color: #194FCB;
+    background-color: rgb(48, 103, 231);
     color: white;
+    border: 1px solid rgb(48, 103, 231);
 }
