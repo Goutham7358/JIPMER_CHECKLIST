@@ -31,14 +31,7 @@
     border-color: red;
 }
 
-.label1 {
-    font-size: 40;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    width: 60vmin;
-    margin-right: 0.6rem;
-    word-wrap: break-word;
-    /* align-self: center; */
-}
+
 
 .list-enclose{
     display: flex;
@@ -111,9 +104,24 @@
     .buttons-container {
         display: none;
     }
+    .label1 {
+        font-size: 40;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        width: 60vmin;
+        margin-right: 0.6rem;
+        word-wrap: break-word;
+        /* align-self: center; */
+    }
 }
 @media only screen and (min-width: 768px) {
     #toggle-menu {
         display: none;
+    }
+    .label1 {
+        font-size: 40;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        margin-right: 0.6rem;
+        word-wrap: break-word;
+        /* align-self: center; */
     }
 }

@@ -1,28 +1,16 @@
 const CheckList = require('../models/checklist');
 
-exports.getChecklist = (req, res, next) => {
-    CheckList.find()
-        .then((items) => {
-            function compare(a, b) {
-                if (a.number < b.number) {
-                    return -1;
-                } else if (a.number > b.number) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
+exports.getChecklist = async (req, res, next) => {
 
-            items.sort(compare);
+  const items = await CheckList.getSortedItems().catch(err=>console.log(err));
+   
+    if(items.length > 0){ 
+        res.render('checklist', {
+            items: items,
+            path: '/'
+        }); 
+       }
 
-            res.render('checklist', {
-                items: items,
-                path: '/'
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
 };
 
 exports.postChecklist = (req, res, next) => {
@@ -46,11 +34,17 @@ exports.postChecklist = (req, res, next) => {
     };
     start().then(() => {
         console.log(products);
-
-        res.render('downloadDoc',{
-          products: products,
-          path: '/download'
-        })
+        if(products.length == 0)
+        {
+            res.redirect('/')
+        }
+        else{
+            res.render('downloadDoc',{
+                products: products,
+                path: '/download'
+              })
+        }
+       
     });
 };
 
@@ -61,63 +55,9 @@ exports.getAddPoint = (req, res, next) => {
     });
 }
 
-exports.postAddPoint = (req, res, next) => {
-    CheckList.find()
-        .then((items) => {
-            function compare(a, b) {
-                if (a.number < b.number) {
-                    return -1;
-                } else if (a.number > b.number) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
+exports.postAddPoint = async (req, res, next) => {
 
-            items.sort(compare);
-
-            async function asyncForEach(array, callback) {
-                for (let index = req.body.number - 1; index < array.length; index++) {
-                    await callback(array[index], index, array);
-                }
-            }
-
-            const itemUpdate = (item, index, items) => {
-                item.number = index + 2;
-                item.save();
-            };
-
-            const start = async() => {
-                await asyncForEach(items, itemUpdate);
-            };
-
-            if (req.body.number > items.length + 1) {
-                req.body.number = items.length + 1;
-                console.log("This can't be done?", req.body.number)
-                const checklist = new CheckList({
-                    number: req.body.number,
-                    description: req.body.description,
-                });
-
-                checklist.save().then((result) => {
-                    res.redirect('/');
-                });
-            } else if (req.body.number >= 0) {
-                start().then((result) => {
-                    const checklist = new CheckList({
-                        number: req.body.number,
-                        description: req.body.description,
-                    });
-
-                    checklist.save().then((result) => {
-                        res.redirect('/');
-                    });
-                });
-            } else {
-                res.redirect('/')
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    const items = await CheckList.getSortedItems().catch(err=>console.log(err));
+    await CheckList.addItemInOrder(items,req.body.number,req.body.description).catch(err=>console.log(err));
+    res.redirect('/');
 };

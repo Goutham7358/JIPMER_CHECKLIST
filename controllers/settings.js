@@ -25,40 +25,12 @@ exports.getSettings = (req, res, next) => {
             console.log(err);
         });
 };
-exports.deleteItem = (req, res, next) => {
+exports.deleteItem = async (req, res, next) => {
     id = req.body.itemToDelete;
     number = req.body.itemNumber;
-    CheckList.findByIdAndRemove(id)
-        .then(() => {
-            console.log("Deleted");
-            console.log(id, number);
-            CheckList.find()
-                .then((items) => {
-                    async function asyncForEach(array, callback) {
-                        for (let index = 0; index < array.length; index++) {
-                            await callback(array[index]);
-                        }
-                    }
 
-                    const start = async() => {
-                        await asyncForEach(items, async(item) => {
-                            if (item.number > number) {
-                                item.number--;
-                                await item.save();
-                            }
-                        });
-
-                    }
-                    start()
-                        .then(() => {
-                            console.log(items);
-                            res.redirect('/settings');
-                        });
-                })
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    await CheckList.deleteItemInOrder(req.body.itemToDelete, req.body.itemNumber).catch(err=>console.log(err));
+    res.redirect('/settings')
 };
 
 async function moveFunc(action, itemIndex, items) {
@@ -138,68 +110,22 @@ exports.getEditPoint = (req, res, next) => {
     })
 }
 
-exports.postEditPoint = (req, res, next) => {
+exports.postEditPoint = async (req, res, next) => {
     const new_number = req.body.number;
     const new_description = req.body.description;
 
-    CheckList.findByIdAndRemove(req.body.id).then((result) => {
-        CheckList.find()
-        .then((items) => {
-            function compare(a, b) {
-                if (a.number < b.number) {
-                    return -1;
-                } else if (a.number > b.number) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
+  const editedItem =   await CheckList.findById(req.body.id);
 
-            items.sort(compare);
+  if(editedItem.number == new_number){
+      editedItem.description = new_description;
+     await editedItem.save();
+  }else{
+    await CheckList.deleteItemInOrder(editedItem._id, editedItem.number).catch(err=>console.log(err));
+    const items = await CheckList.getSortedItems().catch(err=>console.log(err));
+    await CheckList.addItemInOrder(items,new_number,new_description).catch(err=>console.log(err));
+  }
 
-            async function asyncForEach(array, callback) {
-                for (let index = req.body.number - 1; index < array.length; index++) {
-                    await callback(array[index], index, array);
-                }
-            }
+    
+    res.redirect('/settings')
 
-            const itemUpdate = (item, index, items) => {
-                item.number = index + 2;
-                item.save();
-            };
-
-            const start = async() => {
-                await asyncForEach(items, itemUpdate);
-            };
-
-            if (req.body.number > items.length + 1) {
-                req.body.number = items.length + 1;
-                console.log("This can't be done?", req.body.number)
-                const checklist = new CheckList({
-                    number: req.body.number,
-                    description: req.body.description,
-                });
-
-                checklist.save().then((result) => {
-                    res.redirect('/settings');
-                });
-            } else if (req.body.number >= 0) {
-                start().then((result) => {
-                    const checklist = new CheckList({
-                        number: req.body.number,
-                        description: req.body.description,
-                    });
-
-                    checklist.save().then((result) => {
-                        res.redirect('/settings');
-                    });
-                });
-            } else {
-                res.redirect('/settings')
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    })
 }
