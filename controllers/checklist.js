@@ -58,6 +58,11 @@ exports.getAddPoint = (req, res, next) => {
 exports.postAddPoint = async (req, res, next) => {
 
     const items = await CheckList.getSortedItems().catch(err=>console.log(err));
-    await CheckList.addItemInOrder(items,req.body.number,req.body.description).catch(err=>console.log(err));
-    res.redirect('/');
+    if (/\S/.test(req.body.description))
+    {
+        await CheckList.addItemInOrder(items,req.body.number,req.body.description).catch(err=>console.log(err));
+        res.redirect('/');
+    }
+    res.redirect('/add-point');
+   
 };
