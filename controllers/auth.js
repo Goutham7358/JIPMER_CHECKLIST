@@ -18,9 +18,14 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postLogin = async (req, res, next) => {
-  User.findById('5ee4f51ce791665faa8a4c28')
+exports.postLogin = (req, res, next) => {
+  console.log(req.body);
+  User.findOne({email: req.body.email, password: req.body.password})
     .then(user => {
+      if(!user){
+        return res.redirect('/login');
+      }
+      console.log("user is:", user);
       req.session.isLoggedIn = true;
       req.session.user = user;
       req.session.save(err => {
