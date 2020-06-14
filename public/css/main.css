@@ -5,7 +5,7 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 .main-header {
@@ -14,7 +14,7 @@ body {
 }
 
 .main-header-nav {
-    background-color: #0277BD;
+    background-color: #0277bd;
     margin-bottom: 20px;
 }
 
@@ -25,7 +25,7 @@ body {
     display: flex;
 }
 
-.centered{
+.centered {
     text-align: center;
 }
 
@@ -39,12 +39,11 @@ body {
     text-decoration: none;
 }
 .nav-item a:hover,
-.nav-item a:active, 
+.nav-item a:active,
 .nav-item a.active {
     color: #ffe600;
     font-weight: 500;
 }
-
 
 .checklist {
     display: flex;
@@ -65,39 +64,34 @@ body {
     border-radius: 8px;
     align-items: center;
     display: flex;
-
 }
 
 .logout-btn {
-    color: rgb(255, 254, 254);
-    background-color: #058edd;
+    color: rgb(245, 252, 255);
+    background-color: #0277bd;
     border: rgb(161, 161, 161);
     border-radius: 2pt;
     padding-left: 4pt;
     padding-right: 4pt;
-    padding-top: 4pt;
+    padding-top: 0pt;
     padding-bottom: 4pt;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1em;
+    font-weight: 500;
 }
 
-@media only screen and (max-width: 768px){
-    .descriptionContainer{
+@media only screen and (max-width: 768px) {
+    .descriptionContainer {
         word-wrap: break-word;
         width: 60vmin;
     }
-
 }
 
-@media only screen and (min-width: 768px){
-
-    .descriptionContainer{
+@media only screen and (min-width: 768px) {
+    .descriptionContainer {
         word-wrap: break-word;
-    
     }
-
 }
-
-
 
 .product-form {
     width: 50rem;
@@ -106,10 +100,8 @@ body {
     padding-bottom: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;    
+    align-items: center;
 }
-
-
 
 .container {
     display: flex;
@@ -123,9 +115,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
-
 
 /* Hide the browser's default checkbox */
 
@@ -137,7 +128,6 @@ body {
     width: 0;
     margin-right: 10px;
 }
-
 
 /* Create a custom checkbox */
 
@@ -151,20 +141,17 @@ body {
     border-radius: 5px;
 }
 
-
 /* On mouse-over, add a grey background color */
 
-.container:hover input~.checkmark {
+.container:hover input ~ .checkmark {
     background-color: #ccc;
 }
 
-
 /* When the checkbox is checked, add a blue background */
 
-.container input:checked~.checkmark {
+.container input:checked ~ .checkmark {
     background-color: rgb(25, 116, 235);
 }
-
 
 /* Create the checkmark/indicator (hidden when not checked) */
 
@@ -174,13 +161,11 @@ body {
     display: none;
 }
 
-
 /* Show the checkmark when checked */
 
-.container input:checked~.checkmark:after {
+.container input:checked ~ .checkmark:after {
     display: block;
 }
-
 
 /* Style the checkmark/indicator */
 
@@ -219,31 +204,30 @@ body {
 
 .form-control {
     margin: 1rem 0;
-  }
-  
-  .form-control label,
-  .form-control input,
-  .form-control textarea {
+}
+
+.form-control label,
+.form-control input,
+.form-control textarea {
     display: block;
     width: 100%;
     margin-bottom: 0.25rem;
-  }
-  
-  .form-control input,
-  .form-control textarea {
+}
+
+.form-control input,
+.form-control textarea {
     border: 1px solid #a1a1a1;
     font: inherit;
     border-radius: 2px;
-  }
-  
-  .form-control input:focus,
-  .form-control textarea:focus {
-    outline-color: #00695c;
-  }
-  .login-form {
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+    outline-color: #0072cf;
+}
+.login-form {
     width: 20rem;
     max-width: 90%;
     margin: auto;
     display: block;
-  }
-  
+}
