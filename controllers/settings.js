@@ -1,6 +1,10 @@
 const CheckList = require("../models/checklist");
 
 exports.getSettings = (req, res, next) => {
+    console.log(req.session);
+    if(!req.session.isLoggedIn) {
+        res.redirect('/');
+    }
     CheckList.find()
         .then((items) => {
 
@@ -19,6 +23,8 @@ exports.getSettings = (req, res, next) => {
             res.render("settings", {
                 items: items,
                 path: '/settings',
+            isLoggedIn: req.session.isLoggedIn,
+
             });
         })
         .catch((err) => {
@@ -105,7 +111,9 @@ exports.getEditPoint = (req, res, next) => {
             itemId: item._id,
             itemNumber: item.number,
             itemDesc: item.description,
-            path: '/settings'
+            path: '/settings',
+            isLoggedIn: req.session.isLoggedIn,
+
         })
     })
 }

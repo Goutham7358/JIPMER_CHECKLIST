@@ -3,11 +3,27 @@
         <li class="nav-item">
             <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
         </li>
+        <% if(isLoggedIn) { %> 
         <li class="nav-item">
             <a class="<%= path === '/add-point' ? 'active' : '' %>" href="/add-point">Add new point</a>
         </li>
+        <% } %> 
+        <% if(isLoggedIn) { %> 
         <li class="nav-item">
             <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings">Settings</a>
         </li>
+        <% } %> 
+        <% if(!isLoggedIn) { %> 
+        <li class="nav-item">
+            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+        </li>
+        <% } %> 
+        <% if(isLoggedIn) { %> 
+        <li class="nav-item">
+            <form action="/logout" method="post">
+                <button class="logout-btn" type="submit">Logout</button>
+            </form>
+        </li>
+        <% } %> 
     </ul>
 </nav>

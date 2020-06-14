@@ -1,13 +1,14 @@
 const CheckList = require('../models/checklist');
 
 exports.getChecklist = async (req, res, next) => {
-
+    console.log(req.session);
   const items = await CheckList.getSortedItems().catch(err=>console.log(err));
    
     if(items.length > 0){ 
         res.render('checklist', {
             items: items,
-            path: '/'
+            path: '/',
+            isLoggedIn: req.session.isLoggedIn,
         }); 
        }
 
@@ -41,7 +42,8 @@ exports.postChecklist = (req, res, next) => {
         else{
             res.render('downloadDoc',{
                 products: products,
-                path: '/download'
+                path: '/download',
+            isLoggedIn: req.session.isLoggedIn,
               })
         }
        
@@ -51,7 +53,8 @@ exports.postChecklist = (req, res, next) => {
 exports.getAddPoint = (req, res, next) => {
     res.render('addpoint', {
         editing: false,
-        path: '/add-point'
+        path: '/add-point',
+        isLoggedIn: req.session.isLoggedIn,
     });
 }
 
