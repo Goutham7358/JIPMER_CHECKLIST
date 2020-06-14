@@ -69,10 +69,15 @@ body {
 }
 
 .logout-btn {
-    background-color: rgb(255, 255, 255);
+    color: rgb(255, 254, 254);
+    background-color: #058edd;
     border: rgb(161, 161, 161);
     border-radius: 2pt;
-
+    padding-left: 4pt;
+    padding-right: 4pt;
+    padding-top: 4pt;
+    padding-bottom: 4pt;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 @media only screen and (max-width: 768px){
