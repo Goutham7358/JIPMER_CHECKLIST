@@ -1,4 +1,4 @@
-// const User = require('../models/user');
+const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
@@ -18,20 +18,18 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
-//   User.findById('5bab316ce0a7c75f783cb8a8')
-//     .then(user => {
-//       req.session.isLoggedIn = true;
-//       req.session.user = user;
-//       req.session.save(err => {
-//         console.log(err);
-//         res.redirect('/');
-//       });
-//     })
-//     .catch(err => console.log(err));
-    // check user login
-    req.session.isLoggedIn = true;
-    res.redirect('/');
+exports.postLogin = async (req, res, next) => {
+  User.findById('5ee4f51ce791665faa8a4c28')
+    .then(user => {
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      req.session.save(err => {
+        console.log(err);
+        req.session.isLoggedIn = true;
+        res.redirect('/');
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.postSignup = (req, res, next) => {};
