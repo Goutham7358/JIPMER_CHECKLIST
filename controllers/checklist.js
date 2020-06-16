@@ -1,6 +1,13 @@
 const CheckList = require('../models/checklist');
 
 exports.getChecklist = async (req, res, next) => {
+    let errorMessage = req.flash('error');
+  console.log(errorMessage);
+  if (errorMessage.length > 0) {
+    errorMessage = errorMessage[0];
+  } else {
+    errorMessage = null;
+  }
     console.log(req.session);
   const items = await CheckList.getSortedItems().catch(err=>console.log(err));
    
@@ -9,6 +16,7 @@ exports.getChecklist = async (req, res, next) => {
             items: items,
             path: '/',
             isLoggedIn: req.session.isLoggedIn,
+            errorMessage
         }); 
        }
 
@@ -37,6 +45,7 @@ exports.postChecklist = (req, res, next) => {
         console.log(products);
         if(products.length == 0)
         {
+            req.flash('error', 'None selected');
             res.redirect('/')
         }
         else{

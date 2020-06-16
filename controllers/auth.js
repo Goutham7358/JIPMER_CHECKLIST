@@ -1,11 +1,19 @@
 const User = require('../models/user');
 
+
 exports.getLogin = (req, res, next) => {
+  let errorMessage = req.flash('error');
+  console.log(errorMessage);
+  if (errorMessage.length > 0) {
+    errorMessage = errorMessage[0];
+  } else {
+    errorMessage = null;
+  }
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
     isLoggedIn: req.session.isLoggedIn,
-
+    errorMessage,
   });
 };
 
@@ -23,6 +31,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({email: req.body.email, password: req.body.password})
     .then(user => {
       if(!user){
+        req.flash('error', 'Invalid email or password.');
         return res.redirect('/login');
       }
       console.log("user is:", user);
