@@ -188,6 +188,7 @@ body {
     border: 1px solid #a5a5a5;
     color: rgb(43, 97, 223);
     background: white;
+    transition: background-color ease-out 200ms;
     border-radius: 3px;
     cursor: pointer;
     align-self: center;
