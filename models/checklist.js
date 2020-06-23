@@ -12,6 +12,8 @@ const checkListSchema  = new Schema({
     }
 });
 
+
+
 checkListSchema.statics.getSortedItems = async function (){
 
     const items = await this.find();
