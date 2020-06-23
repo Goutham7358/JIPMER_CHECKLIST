@@ -11,6 +11,10 @@
 <body>
     <h1 class="main-header">JOURNAL REVIEW CHECKLIST</h1>
     <%- include('./includes/navigation.ejs') %>
+    <% if(errorMessage) { %>
+        <div class="user-message user-message--error">
+            <%= errorMessage %> </div>
+    <% } %>  
         <form action="/" method="POST" class="checklist">
             <div class="list">
                 <% for (let item of items) { %>
