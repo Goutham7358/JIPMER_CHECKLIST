@@ -51,20 +51,6 @@ exports.postLogin = (req, res, next) => {
     }).catch(err => console.log(err));
   }) .catch(err => console.log(err));
   
-
-  User.findOne({email: req.body.email, password: req.body.password})
-    .then(user => {
-
-      console.log("user is:", user);
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      req.session.save(err => {
-        console.log(err);
-        req.session.isLoggedIn = true;
-        res.redirect('/');
-      });
-    })
-    .catch(err => console.log(err));
 };
 
 exports.postSignup = (req, res, next) => {};
