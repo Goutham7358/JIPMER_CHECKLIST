@@ -16,7 +16,6 @@
             <%= errorMessage %> </div>
     <% } %>  
         <form action="/" method="POST" class="checklist">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="list">
                 <% for (let item of items) { %>
                     <div class="list-item">
@@ -31,6 +30,7 @@
                     </div>
                     <% } %>
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" class="btn">Submit</button>
         </form>
 </body>

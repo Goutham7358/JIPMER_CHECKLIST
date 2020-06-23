@@ -23,7 +23,9 @@ exports.getChecklist = async (req, res, next) => {
 };
 
 exports.postChecklist = (req, res, next) => {
-    const result = Object.keys(req.body).map((key) => {
+    const body = req.body;
+    delete body._csrf
+    const result = Object.keys(body).map((key) => {
         return key;
     });
     let products = [];
