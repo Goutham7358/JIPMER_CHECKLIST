@@ -16,6 +16,7 @@
                 <%= errorMessage %> </div>
         <% } %>  
         <form class="login-form" action="/login" method="POST">
+            <h1><%= csrfToken %></h1>
             <div class="form-control">
                 <label for="email">E-Mail</label>
                 <input type="email" name="email" id="email">
@@ -27,6 +28,7 @@
             <div style="display: flex; align-content: center; justify-content: center;">
                 <button class="btn" type="submit">LOGIN</button>
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         </form>
     </main>
 </body>
