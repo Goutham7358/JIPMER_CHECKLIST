@@ -32,12 +32,14 @@ body {
 .nav-item {
     padding: 20px;
 }
+
 .nav-item a {
     color: rgb(245, 252, 255);
     font-size: 1em;
     font-weight: 500;
     text-decoration: none;
 }
+
 .nav-item a:hover,
 .nav-item a:active,
 .nav-item a.active {
@@ -118,6 +120,7 @@ body {
     font-family: Georgia, "Times New Roman", Times, serif;
 }
 
+
 /* Hide the browser's default checkbox */
 
 .container input {
@@ -128,6 +131,7 @@ body {
     width: 0;
     margin-right: 10px;
 }
+
 
 /* Create a custom checkbox */
 
@@ -141,17 +145,20 @@ body {
     border-radius: 5px;
 }
 
+
 /* On mouse-over, add a grey background color */
 
-.container:hover input ~ .checkmark {
+.container:hover input~.checkmark {
     background-color: #ccc;
 }
 
+
 /* When the checkbox is checked, add a blue background */
 
-.container input:checked ~ .checkmark {
+.container input:checked~.checkmark {
     background-color: rgb(25, 116, 235);
 }
+
 
 /* Create the checkmark/indicator (hidden when not checked) */
 
@@ -161,11 +168,13 @@ body {
     display: none;
 }
 
+
 /* Show the checkmark when checked */
 
-.container input:checked ~ .checkmark:after {
+.container input:checked~.checkmark:after {
     display: block;
 }
+
 
 /* Style the checkmark/indicator */
 
@@ -226,12 +235,14 @@ body {
 .form-control textarea:focus {
     outline-color: #0072cf;
 }
+
 .login-form {
     width: 20rem;
     max-width: 90%;
     margin: auto;
     display: block;
 }
+
 .user-message {
     margin: auto;
     width: 90%;
@@ -240,11 +251,63 @@ body {
     border-radius: 3px;
     background: #b9c9ff;
     text-align: center;
-  }
-  
-  .user-message--error {
+}
+
+.user-message--error {
     border-color: red;
     background: rgb(255, 176, 176);
     color: red;
-  }
-  
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 110px;
+    font-size: 14px;
+    background-color: rgba(53, 53, 53, 0.863);
+    color: #fff;
+    text-align: center;
+    border-radius: 2.5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    left: 90%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.copy-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 5%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+}
+
+#myInput {
+    width: 90%;
+    margin-right: 1.5%;
+}
