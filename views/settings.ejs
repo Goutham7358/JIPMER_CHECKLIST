@@ -25,6 +25,7 @@
                     <div class="dropdown-content">
                         <button class="btn" onclick="off(<%= item.number - 1 %>)">X</button>
                         <form class="form1" action="/settings-delete" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
                             <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
                             <button class="btn danger" type="submit">DELETE</button>
@@ -32,12 +33,14 @@
                         <a href="/settings-edit/<%= item._id %>" class="btn">EDIT</a>
                         <div style="display: flex; align-items: center; justify-content: center;">
                             <form class="form1" action="/settings-move" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="itemToMove" value=<%= item._id %>>
                                 <input type="hidden" name="action" value="up" %>>
                                 <input type="hidden" name="itemsList" value=<%= item.number %>>
                                 <button class="btn"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
                             </form>
                             <form class="form1" action="/settings-move" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="itemToMove" value=<%= item._id %>>
                                 <input type="hidden" name="action" value="down" %>>
                                 <input type="hidden" name="itemsList" value=<%= item.number %>>
@@ -49,18 +52,21 @@
                 
                 <div class="buttons-container"> 
                     <form class="form1" action="/settings-delete" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="hidden" name="itemToDelete" value=<%= item._id %> id=<%= item.number %>>
                         <input type="hidden" name="itemNumber" value=<%= item.number %> id=<%= item.number %>>
                         <button class="btn danger" type="submit">DELETE</button>
                     </form>
                     <a href="/settings-edit/<%= item._id %>" class="btn">EDIT</a>
                     <form class="form1" action="/settings-move" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="hidden" name="itemToMove" value=<%= item._id %>>
                         <input type="hidden" name="action" value="up" %>>
                         <input type="hidden" name="itemsList" value=<%= item.number %>>
                         <button class="btn"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
                     </form>
                     <form class="form1" action="/settings-move" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="hidden" name="itemToMove" value=<%= item._id %>>
                         <input type="hidden" name="action" value="down" %>>
                         <input type="hidden" name="itemsList" value=<%= item.number %>>
