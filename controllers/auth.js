@@ -8,8 +8,7 @@ exports.getLogin = (req, res, next) => {
     errorMessage = errorMessage[0];
   } else {
     errorMessage = null;
-  }
-  //console.log('csrf:', req.csrfToken());
+    
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
