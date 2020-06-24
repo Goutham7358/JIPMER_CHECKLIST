@@ -1,54 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script  > function Export2Doc(element, filename = ''){
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        function Export2Doc(element, filename = '') {
             var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
             var postHtml = "</body></html>";
-            var html = preHtml+document.getElementById(element).innerHTML+postHtml;
-        
-            var blob = new Blob(['\ufeff', html],{
+            var html = preHtml + document.getElementById(element).innerHTML + postHtml;
+
+            var blob = new Blob(['\ufeff', html], {
                 type: 'application/msword'
             });
-        
+
             var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html)
-        
-            filename = filename?filename+'.doc': 'document.doc';
-        
+
+            filename = filename ? filename + '.doc' : 'document.doc';
+
             var downloadLink = document.createElement("a");
-        
+
             document.body.appendChild(downloadLink);
-        
-            if(navigator.msSaveOrOpenBlob){
+
+            if (navigator.msSaveOrOpenBlob) {
                 navigator.msSaveOrOpenBlob(blob, filename);
-            }else{
+            } else {
                 downloadLink.href = url;
-        
+
                 downloadLink.download = filename;
-        
+
                 downloadLink.click();
             }
-        
-            document.body.removeChild(downloadLink);
-        
-        
-        } </script>
-        <title>Export Html to Word Document</title>
-        <link rel="stylesheet" href="/css/main.css">
-    </head>
-    <body>
-        <h1 class="main-header">JOURNAL REVIEW CHECKLIST DOWNLOAD</h1>
-        <%- include('./includes/navigation.ejs') %>
-        <div id="exportContent">
-            <% for (let product of products) { %>
-            <p><%= product.number %>. <%= product.description%></p> 
-            <% } %>
-        </div>
 
-        <div class="centered">
-        <button onclick="Export2Doc('exportContent', 'test');" class="btn">Export as Doc</button>
+            document.body.removeChild(downloadLink);
+
+
+        }
+    </script>
+
+    <title>Export Html to Word Document</title>
+    <script src="https://use.fontawesome.com/a70c4c5706.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <h1 class="main-header">JOURNAL REVIEW CHECKLIST DOWNLOAD</h1>
+    <%- include('./includes/navigation.ejs') %>
+        <div id="exportContent" style="display: none;">
+            <% for (let product of products) { %>
+                <p>
+
+                    <%= product.description%>
+                </p>
+                <% } %>
         </div>
-        
-    </body>
+        <div class="copy-container">
+            <textarea type="text" id="myInput" rows="25"><%for (let product of products) { %><%=product.description%>&#10<%} %></textarea>
+            <div class="centered">
+                <div class="tooltip">
+                    <button onclick="myFunction()" id="copy-btn" class="btn" onmouseout="outFunc()">
+                    <span class="tooltiptext" id="myTooltip">Copy</span>
+                    <i class="fa fa-clone" aria-hidden="true"></i>
+                </button>
+                </div>
+            </div>
+        </div>
+        <div class="centered">
+            <button onclick="Export2Doc('exportContent', 'test');" class="btn">Export as Doc</button>
+        </div>
+        <script>
+            function myFunction() {
+                var copyText = document.getElementById("myInput");
+                copyText.select();
+                document.execCommand("copy");
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copied!";
+            }
+
+            function outFunc() {
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copy";
+            }
+        </script>
+</body>
+
 </html>
+<!-- bullet • -->

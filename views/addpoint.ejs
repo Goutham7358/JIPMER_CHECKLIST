@@ -13,6 +13,7 @@
     <h1 class="main-header">Add New Item</h1>
     <%- include('./includes/navigation.ejs') %>
         <form action="<% if(!editing) { %>/add-point<% } else { %>/settings-edit<% } %>" method="POST" class="product-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-control">
             <label for="number">Point Number</label>
             <input type="number" name="number" id="number" min="1" value="<% if(editing){ %><%= itemNumber %><% } %>" required>

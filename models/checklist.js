@@ -60,8 +60,7 @@ checkListSchema.statics.addItemInOrder = async function(items, itemNumber, itemD
             await  checklist.save()
         })();
      
-    } 
-     if (itemNumber >= 0) {
+    } else if (itemNumber >= 0) {
             await start()
             const checklist = new this({
                 number: itemNumber,
