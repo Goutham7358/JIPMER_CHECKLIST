@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
@@ -23,9 +26,8 @@
     "express-session": "^1.17.1",
     "helmet": "^3.23.3",
     "mongodb": "^3.5.8",
-    "mongoose": "^5.9.16"
-  },
-  "devDependencies": {
+    "mongoose": "^5.9.16",
     "nodemon": "^2.0.4"
-  }
+  },
+  "devDependencies": {}
 }
