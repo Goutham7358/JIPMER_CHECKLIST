@@ -12,7 +12,9 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const csrf = require('csurf');
 const User = require('./models/user');
-
+const authController = require('./controllers/auth');
+const { error } = require('console');
+ 
 
 const MONGODB_URI = 'mongodb+srv://JIPMER:xgIzafJumuLrV0ux@cluster0-opfdu.mongodb.net/journal'
 
@@ -47,6 +49,14 @@ app.use(
 app.use(csrfProtection);
 app.use(flash());
 
+app.use((req,res,next) => {
+    let token;
+    res.locals.csrfToken = token = req.csrfToken();
+    console.log(req.session);
+    console.log("CSRFTOKEN:", token);
+    next();
+})
+
 app.use((req, res, next) => {
     if(!req.session.user){
         return next();
@@ -56,21 +66,29 @@ app.use((req, res, next) => {
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    });
 })
 
-app.use((req,res,next) => {
-    let token;
-    res.locals.csrfToken = token = req.csrfToken();
-    console.log(req.session);
-    console.log("CSRFTOKEN:", token);
-    next();
-})
 app.use(authRoutes);
 app.use(checklistRoutes);
+
+app.use((error, req, res, next) => {
+    res.render('error', {
+        errorMessage:'Sorry Something went Wrong!',
+        path:'no',
+        isLoggedIn: req.session.isLoggedIn
+    })
+})
 
 
 mongoose.connect(MONGODB_URI)
     .then((result) => {
         app.listen(3000);
-    }).catch(err => { console.log(err) });
+    }).catch(err => {
+        console.log(err);
+    });

@@ -29,13 +29,21 @@ exports.getSettings = (req, res, next) => {
         })
         .catch((err) => {
             console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 exports.deleteItem = async (req, res, next) => {
     id = req.body.itemToDelete;
     number = req.body.itemNumber;
-
-    await CheckList.deleteItemInOrder(req.body.itemToDelete, req.body.itemNumber).catch(err=>console.log(err));
+    await CheckList.deleteItemInOrder(req.body.itemToDelete, req.body.itemNumber)
+        .catch(err=>{
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
     res.redirect('/settings')
 };
 
@@ -46,8 +54,15 @@ async function moveFunc(action, itemIndex, items) {
             tempNum = items[itemIndex].number;
             items[itemIndex].number = items[itemIndex - 1].number;
             items[itemIndex - 1].number = tempNum;
-            await items[itemIndex].save();
-            await items[itemIndex - 1].save();
+            try {
+                await items[itemIndex].save();
+                await items[itemIndex - 1].save();
+            } catch(err) {
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            }
         }
     }
     if (action === 'down') {
@@ -56,8 +71,15 @@ async function moveFunc(action, itemIndex, items) {
             tempNum = items[itemIndex].number;
             items[itemIndex].number = items[itemIndex + 1].number;
             items[itemIndex + 1].number = tempNum;
-            await items[itemIndex].save();
-            await items[itemIndex + 1].save();
+            try {
+                await items[itemIndex].save();
+                await items[itemIndex + 1].save();
+            } catch(err) {
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            }
         }
     }
 }
@@ -84,9 +106,14 @@ exports.moveHandler = (req, res, next) => {
             console.log("Selected item index is:", selectedItem)
             const itemIndex = items.findIndex(item => item._id.toString() === selectedItem.toString());
             console.log("The index of the item is:", itemIndex);
-
-            await moveFunc(action, itemIndex, items);
-            
+            try {
+                await moveFunc(action, itemIndex, items);
+            } catch(err) {
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            }
             console.log("The item before the selected item is :", items[itemIndex - 1]);
             console.log("The item after the selected item is:", items[itemIndex + 1]);
             res.redirect('/settings');
@@ -94,6 +121,9 @@ exports.moveHandler = (req, res, next) => {
         })
         .catch((err) => {
             console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 
 
@@ -115,6 +145,11 @@ exports.getEditPoint = (req, res, next) => {
             isLoggedIn: req.session.isLoggedIn,
 
         })
+    }).catch(err=>{
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
     })
 }
 
@@ -126,14 +161,27 @@ exports.postEditPoint = async (req, res, next) => {
 
   if(editedItem.number == new_number){
       editedItem.description = new_description;
-     await editedItem.save();
-  }else{
-    await CheckList.deleteItemInOrder(editedItem._id, editedItem.number).catch(err=>console.log(err));
-    const items = await CheckList.getSortedItems().catch(err=>console.log(err));
-    await CheckList.addItemInOrder(items,new_number,new_description).catch(err=>console.log(err));
+    try{
+        await editedItem.save();
+    } catch(err) {
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    }
+  } else {
+      try {
+        await CheckList.deleteItemInOrder(editedItem._id, editedItem.number).catch(err=>console.log(err));
+        const items = await CheckList.getSortedItems().catch(err=>console.log(err));
+        await CheckList.addItemInOrder(items,new_number,new_description).catch(err=>console.log(err));
+      } catch(err) {
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    }
   }
 
-    
     res.redirect('/settings')
 
 }
