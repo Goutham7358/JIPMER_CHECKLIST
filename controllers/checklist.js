@@ -9,7 +9,12 @@ exports.getChecklist = async (req, res, next) => {
     errorMessage = null;
   }
     console.log(req.session);
-  const items = await CheckList.getSortedItems().catch(err=>console.log(err));
+  const items = await CheckList.getSortedItems().catch(err=>{
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    });
    
     if(items.length > 0){ 
         res.render('checklist', {
@@ -40,6 +45,11 @@ exports.postChecklist = (req, res, next) => {
         await asyncForEach(result, async(id) => {
             await CheckList.findOne({ _id: id }).then((product) => {
                 if (product) products.push(product);
+            }).catch(err => {
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
             });
         });
     };
@@ -58,6 +68,11 @@ exports.postChecklist = (req, res, next) => {
               })
         }
        
+    }).catch(err => {
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
     });
 };
 
@@ -71,10 +86,29 @@ exports.getAddPoint = (req, res, next) => {
 
 exports.postAddPoint = async (req, res, next) => {
 
-    const items = await CheckList.getSortedItems().catch(err=>console.log(err));
+    const items = await CheckList.getSortedItems()
+    .catch(err=>{
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    });
     if (/\S/.test(req.body.description))
     {
-        await CheckList.addItemInOrder(items,req.body.number,req.body.description).catch(err=>console.log(err));
+        try{
+            await CheckList.addItemInOrder(items,req.body.number,req.body.description)
+            .catch(err=>{
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            });
+        } catch(err) {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        }
         res.redirect('/');
     }
     res.redirect('/add-point');
