@@ -157,7 +157,13 @@ exports.postEditPoint = async (req, res, next) => {
     const new_number = req.body.number;
     const new_description = req.body.description;
 
-  const editedItem =   await CheckList.findById(req.body.id);
+    const editedItem = await CheckList.findById(req.body.id)
+        .catch( err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);   
+    });
 
   if(editedItem.number == new_number){
       editedItem.description = new_description;

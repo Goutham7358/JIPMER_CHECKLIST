@@ -77,8 +77,16 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use(checklistRoutes);
 
+app.use((req, res, next) => {
+    res.status(404).render('404', {
+      pageTitle: 'Page Not Found',
+      path: '/404',
+      isLoggedIn: req.session.isLoggedIn
+    });
+})
+
 app.use((error, req, res, next) => {
-    res.render('error', {
+    res.status(500).render('error', {
         errorMessage:'Sorry Something went Wrong!',
         path:'no',
         isLoggedIn: req.session.isLoggedIn
