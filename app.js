@@ -11,12 +11,14 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const csrf = require('csurf');
+const helmet = require('helmet');
+const compression = require('compression');
 const User = require('./models/user');
 const authController = require('./controllers/auth');
 const { error } = require('console');
  
 
-const MONGODB_URI = 'mongodb+srv://JIPMER:xgIzafJumuLrV0ux@cluster0-opfdu.mongodb.net/journal'
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-opfdu.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`
 
 const app = express();
 
@@ -31,6 +33,9 @@ const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use(helmet());
+app.use(compression());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -96,7 +101,12 @@ app.use((error, req, res, next) => {
 
 mongoose.connect(MONGODB_URI)
     .then((result) => {
+<<<<<<< HEAD
         app.listen(3000);
     }).catch(err => {
         console.log(err);
     });
+=======
+        app.listen(process.env.PORT || 3000);
+    }).catch(err => { console.log(err) });
+>>>>>>> Making the app production ready
