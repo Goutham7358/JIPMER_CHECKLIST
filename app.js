@@ -11,10 +11,14 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const csrf = require('csurf');
+const helmet = require('helmet');
+const compression = require('compression');
 const User = require('./models/user');
+const authController = require('./controllers/auth');
+const { error } = require('console');
+ 
 
-
-const MONGODB_URI = 'mongodb+srv://JIPMER:xgIzafJumuLrV0ux@cluster0-opfdu.mongodb.net/journal'
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-opfdu.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`
 
 const app = express();
 
@@ -29,6 +33,9 @@ const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use(helmet());
+app.use(compression());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -47,6 +54,14 @@ app.use(
 app.use(csrfProtection);
 app.use(flash());
 
+app.use((req,res,next) => {
+    let token;
+    res.locals.csrfToken = token = req.csrfToken();
+    console.log(req.session);
+    console.log("CSRFTOKEN:", token);
+    next();
+})
+
 app.use((req, res, next) => {
     if(!req.session.user){
         return next();
@@ -56,21 +71,35 @@ app.use((req, res, next) => {
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    });
 })
 
-app.use((req,res,next) => {
-    let token;
-    res.locals.csrfToken = token = req.csrfToken();
-    console.log(req.session);
-    console.log("CSRFTOKEN:", token);
-    next();
-})
 app.use(authRoutes);
 app.use(checklistRoutes);
+
+app.use((req, res, next) => {
+    res.status(404).render('404', {
+      pageTitle: 'Page Not Found',
+      path: '/404',
+      isLoggedIn: req.session.isLoggedIn
+    });
+})
+
+app.use((error, req, res, next) => {
+    res.status(500).render('error', {
+        errorMessage:'Sorry Something went Wrong!',
+        path:'no',
+        isLoggedIn: req.session.isLoggedIn
+    })
+})
 
 
 mongoose.connect(MONGODB_URI)
     .then((result) => {
-        app.listen(3000);
+        app.listen(process.env.PORT || 3000);
     }).catch(err => { console.log(err) });
