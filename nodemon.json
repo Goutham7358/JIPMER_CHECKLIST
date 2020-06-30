@@ -1,7 +1,0 @@
-{
-    "env":{
-        "MONGO_USER": "JIPMER",
-        "MONGO_PASSWORD": "xgIzafJumuLrV0ux",
-        "MONGO_DEFAULT_DATABASE": "journal"
-    }
-}
